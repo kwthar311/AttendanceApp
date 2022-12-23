@@ -1,0 +1,374 @@
+﻿@model AttendanceApp.ViewModels.CreateEmployee
+@*<style>
+    .genPassword {
+        display: flex;
+        justify-content: end;
+        margin-top: 15px;
+        /* margin-bottom: -7px; */
+    }
+</style>
+<h1>hello</h1>
+
+
+
+
+@{
+    ViewData["Title"] = "Create Employee";
+}
+
+<h1>Create</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" id="txtPassword" onkeyup="CheckPasswordStrength(this.value)" type="text" class="form-control" placeholder="Enter your password" autocomplete="off" required>
+                <span id="password_strength"></span>
+                
+            </div>
+            <div class="genPassword">
+                <button type="button" class="btn btn-info " onclick="genPassword()">Generate password</button>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkDay" class="control-label"></label>
+                <input asp-for="WorkDay" class="form-control" type="date" />
+                <span asp-validation-for="WorkDay" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StandardCheckIn" class="control-label"></label>
+                <input asp-for="StandardCheckIn" class="form-control" type="time" />
+                <span asp-validation-for="StandardCheckIn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StandardCheckOut" class="control-label"></label>
+                <input asp-for="StandardCheckOut" class="form-control" type="time" />
+                <span asp-validation-for="StandardCheckOut" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href="~/Admin">Back to List</a>
+</div>
+
+<script type="text/javascript">
+    function CheckPasswordStrength(password) {
+        var password_strength = document.getElementById("password_strength");
+
+        //TextBox left blank.
+        if (password.length == 0) {
+            password_strength.innerHTML = "";
+            return;
+        }
+        else if (password.length < 6) {
+             password_strength.innerHTML =  "<span style='color: red;'> Minimum password length is 6 </span>";
+
+            return;
+        }
+
+        //Regular Expressions.
+        var regex = new Array();
+        regex.push("[A-Z]"); //Uppercase Alphabet.
+        regex.push("[a-z]"); //Lowercase Alphabet.
+        regex.push("[0-9]"); //Digit.
+        regex.push("[$@@$!%*#?&]"); //Special Character.
+
+        var passed = 0;
+
+        //Validate for each Regular Expression.
+        for (var i = 0; i < regex.length; i++) {
+            if (new RegExp(regex[i]).test(password)) {
+                passed++;
+            }
+        }
+
+        //Validate for length of Password.
+        if (passed > 2 && password.length > 8) {
+            passed++;
+        }
+
+        //Display status.
+        var color = "";
+        var strength = "";
+        switch (passed) {
+            case 0:
+            case 1:
+                strength = "Weak";
+                color = "red";
+                break;
+            case 2:
+                strength = "Good";
+                color = "darkorange";
+                break;
+            case 3:
+            case 4:
+                strength = "Strong";
+                color = "green";
+                break;
+            case 5:
+                strength = "Very Strong";
+                color = "darkgreen";
+                break;
+        }
+        password_strength.innerHTML = strength;
+        password_strength.style.color = color;
+    }
+
+
+
+    var password=document.getElementById("txtPassword");
+
+ function genPassword() {
+    var chars = "0123456789abcdefghijklmnopqrstuvwxyz!@@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var passwordLength = 12;
+    var password = "";
+ for (var i = 0; i <= passwordLength; i++) {
+   var randomNumber = Math.floor(Math.random() * chars.length);
+   password += chars.substring(randomNumber, randomNumber +1);
+  }
+        document.getElementById("txtPassword").value = password;
+     CheckPasswordStrength(password);
+ }
+
+
+</script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+*@
+
+<style>
+    .footer[b-zq352x9rru] {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        white-space: nowrap;
+        line-height: 60px;
+        background-color: #f8f9fa !important;
+    }
+
+    .genPassword {
+        display: flex;
+        justify-content: end;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .card-footer {
+        padding: 0.5rem 1rem;
+        background-color: rgba(0,0,0,.03);
+        /* border-top: 1px solid rgba(0,0,0,.125); */
+    }
+
+    span#password_strength {
+        /* border-color: cadetblue; */
+        border: 1px solid #ccc !important;
+        border-radius: 16px;
+        /* margin-top: 8px; */
+        position: absolute;
+        margin-top: 5px;
+        color: white;
+        font-size: small;
+    }
+</style>
+    <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Login - SB Admin</title>
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="bg-primary">
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-5">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                <div class="card-header"><h3 class="text-center font-weight-light my-4">Add New Employee</h3></div>
+                                    <div class="card-body">
+                                    <form asp-action="Index">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="form-floating mb-3">
+                                            <input asp-for="Name" class="form-control" id="Name" type="text" required />
+                                            <label for="Name">Name</label>
+                                            @*<span asp-validation-for="Name" class="text-danger"></span>*@
+                                            </div>
+
+
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="Email" class="form-control" id="inputEmail" type="email" required />
+                                            <label for="inputEmail">Email address</label>
+                                           @* <span asp-validation-for="Email" class="text-danger"></span>*@
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="Password" id="txtPassword" onkeyup="CheckPasswordStrength(this.value)" type="text" class="form-control"  autocomplete="off" required />
+                                            <label asp-for="Password" style="color: #212529;">Password</label>
+                                           @* <span asp-validation-for="Password" class="text-danger"></span>*@
+                                            <span id="password_strength"></span>
+                                        </div>
+
+                                          <div class="genPassword">
+                                        <button type="button" class="btn btn-info " onclick="genPassword()">Generate password</button>
+
+                                        </div>
+
+                                         <div class="form-floating mb-3">
+                                            <input asp-for="WorkDay" class="form-control" id="WorkDay" type="date" required />
+                                            <label for="WorkDay">WorkDay</label>
+                                           @* <span asp-validation-for="Password" class="text-danger"></span>*@
+                                        </div>
+                                            
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="StandardCheckIn" class="form-control" id="StandardCheckIn" type="time" required />
+                                            <label for="StandardCheckIn">StandardCheckIn</label>
+                                           @* <span asp-validation-for="Password" class="text-danger"></span>*@
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            <input asp-for="StandardCheckOut" class="form-control" id="StandardCheckOut" type="time" required />
+                                            <label for="StandardCheckOut">StandardCheckOut</label>
+                                           @* <span asp-validation-for="Password" class="text-danger"></span>*@
+                                        </div>
+                                          
+                                            
+
+                                            <div class="card-footer text-center py-3 d-flex align-items-center justify-content-between mt-4 mb-0">
+                                                <a class="btn btn-primary" href="~/Admin">Back</a>
+                                                <input type="submit" value="Create" class="btn btn-primary" />
+                                            </div>
+                                            
+                                        </form>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+         
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
+
+<script type="text/javascript">
+    function CheckPasswordStrength(password) {
+        var password_strength = document.getElementById("password_strength");
+
+        //TextBox left blank.
+        if (password.length == 0) {
+            password_strength.innerHTML = "";
+            return;
+        }
+        else if (password.length < 6) {
+             password_strength.innerHTML =  "<span style='color: red;'> Minimum password length is 6 </span>";
+
+            return;
+        }
+
+        //Regular Expressions.
+        var regex = new Array();
+        regex.push("[A-Z]"); //Uppercase Alphabet.
+        regex.push("[a-z]"); //Lowercase Alphabet.
+        regex.push("[0-9]"); //Digit.
+        regex.push("[$@@$!%*#?&]"); //Special Character.
+
+        var passed = 0;
+
+        //Validate for each Regular Expression.
+        for (var i = 0; i < regex.length; i++) {
+            if (new RegExp(regex[i]).test(password)) {
+                passed++;
+            }
+        }
+
+        //Validate for length of Password.
+        if (passed > 2 && password.length > 8) {
+            passed++;
+        }
+
+        //Display status.
+        var color = "";
+        var strength = "";
+        switch (passed) {
+            case 0:
+            case 1:
+                strength = "Weak";
+                color = "red";
+                break;
+            case 2:
+                strength = "Good";
+                color = "darkorange";
+                break;
+            case 3:
+            case 4:
+                strength = "Strong";
+                color = "green";
+                break;
+            case 5:
+                strength = "Very Strong";
+                color = "darkgreen";
+                break;
+        }
+        password_strength.innerHTML = strength;
+        password_strength.style.backgroundColor = color;
+    }
+
+
+
+    var password=document.getElementById("txtPassword");
+
+ function genPassword() {
+    var chars = "0123456789abcdefghijklmnopqrstuvwxyz!@@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var passwordLength = 12;
+    var password = "";
+ for (var i = 0; i <= passwordLength; i++) {
+   var randomNumber = Math.floor(Math.random() * chars.length);
+   password += chars.substring(randomNumber, randomNumber +1);
+  }
+        document.getElementById("txtPassword").value = password;
+     CheckPasswordStrength(password);
+ }
+
+
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

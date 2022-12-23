@@ -1,0 +1,77 @@
+﻿@model IEnumerable<AttendanceApp.Models.EmployeesDatum>
+
+@{
+    ViewData["Title"] = "Report of Employees Attendance ";
+    ViewData["BreadCrumb"] = "<a href='/Admin' class='breadcrumb-item'>Admin</a>";
+}
+
+<style>
+    .card {
+        margin-top: 15px;
+    }
+
+    .footer[b-zq352x9rru] {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        white-space: nowrap;
+        line-height: 60px;
+        background-color: #f8f9fa !important;
+    }
+
+    #backgroundImage {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: -1;
+    }
+</style>
+
+<body >
+
+    <img src="~/css/AdminBack.jpg" id="backgroundImage" />
+
+    <partial name="_FilterForm" model="new FilterViewModelcs()" />
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Report of Employees Attendance</h5>
+        </div>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr class="bg-primary text-white">
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>WorkDay</th>
+                    <th>StandardCheckIn</th>
+                    <th>CheckIn</th>
+                    <th>ArriveLate</th>
+                    <th>StandardCheckOut</th>
+                    <th>CheckOut</th>
+                    <th>LeaveEarly</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model)
+                {
+                    <tr>
+                        <td>@role.Id</td>
+                        <td>@role.Name</td>
+                        <td>@role.WorkDay</td>
+                        <td>@role.StandardCheckIn</td>
+                        <td>@role.CheckIn</td>
+                        <td>@role.ArriveLate</td>
+                        <td>@role.StandardCheckOut</td>
+                        <td>@role.CheckOut</td>
+                        <td>@role.LeaveEarly</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    </body>
+
+
